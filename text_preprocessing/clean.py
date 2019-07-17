@@ -140,3 +140,128 @@ def remove_duplicate(data):
     data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
     return data
 
+def remove_underscore(data):
+    if verbose: print('#' * 10, 'Step - Remove underscore:')
+    local_vocab = {}
+    temp_vocab = _check_vocab(data, local_vocab, response='unknown_list')
+    temp_vocab = [k for k in temp_vocab if _check_replace(k)]
+    temp_dict = {}
+    for word in temp_vocab:
+        if (len(re.compile('[a-zA-Z0-9\-\.\,\/\']').sub('', word))/len(word) > 0.6) and ('_' in word):
+            temp_dict[word] = re.sub('_', '', word)
+    print(data[0:1])
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    if verbose: _print_dict(temp_dict)
+    return data
+
+def seperate_spam_chars(data):
+    if verbose: print('#' * 10, 'Step - Spam chars repetition:')
+    local_vocab = {}
+    temp_vocab = _check_vocab(data, local_vocab, response='unknown_list')
+    temp_vocab = [k for k in temp_vocab if _check_replace(k)]
+    temp_dict = {}
+    for word in temp_vocab:
+        if (len(re.compile('[a-zA-Z0-9\-\.\,\/\']').sub('', word))/len(word) > 0.6) and (len(Counter(word))==1) and (len(word)>2):
+            temp_dict[word] = ' '.join([' ' + next(iter(Counter(word).keys())) + ' ' for i in range(3)])
+    print(temp_dict)
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    return data
+
+def seperate_brakets_quotes(data):
+    if verbose: print('#' * 10, 'Step - Brackets and quotes:')
+    chars = '()[]{}<>"'
+    chars_dict = {ord(c):f' {c} ' for c in chars}
+    data = list(map(lambda x: ' '.join([_make_cleaning(i,chars_dict) for i in x.split()]), data))
+    return data
+
+def break_short_words(data):
+    if verbose: print('#' * 10, 'Step - Break long words:') 
+    
+    temp_vocab = list(set([c for line in data for c in line.split()]))
+    temp_vocab = [k for k in temp_vocab if _check_replace(k)]
+    temp_vocab = [k for k in temp_vocab if len(k)<=20]
+
+    temp_dict = {}
+    for word in temp_vocab:
+        if '/' in word:
+            temp_dict[word] = re.sub('/', ' / ', word)
+
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    if verbose: _print_dict(temp_dict)
+    return data
+
+def break_long_words(data):
+    if verbose: print('#' * 10, 'Step - Break long words:') 
+    
+    temp_vocab = list(set([c for line in data for c in line.split()]))
+    temp_vocab = [k for k in temp_vocab if _check_replace(k)]
+    temp_vocab = [k for k in temp_vocab if len(k)>20]
+
+    temp_dict = {}
+    for word in temp_vocab:
+        if '_' in word:
+            temp_dict[word] = re.sub('_', ' ', word)
+        elif '/' in word:
+            temp_dict[word] = re.sub('/', ' / ', word)
+        elif len(' '.join(word.split('-')).split())>2:
+            temp_dict[word] = re.sub('-', ' ', word)
+
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    if verbose: _print_dict(temp_dict)
+    return data
+
+def remove_ending_underscore(data):
+    if verbose: print('#' * 10, 'Step - Remove ending underscore:')
+    local_vocab = {}
+    temp_vocab = _check_vocab(data, local_vocab, response='unknown_list')
+    temp_vocab = [k for k in temp_vocab if (_check_replace(k)) and ('_' in k)]
+    temp_dict = {}
+    for word in temp_vocab:
+        new_word = word
+        if word[len(word)-1]=='_':
+            for i in range(len(word),0,-1):
+                if word[i-1]!='_':
+                    new_word = word[:i]
+                    temp_dict[word] = new_word   
+                    break
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    if verbose: _print_dict(temp_dict)
+    return data
+
+def remove_starting_underscore(data):
+    if verbose: print('#' * 10, 'Step - Remove ending underscore:')
+    local_vocab = {}
+    temp_vocab = _check_vocab(data, local_vocab, response='unknown_list')
+    temp_vocab = [k for k in temp_vocab if (_check_replace(k)) and ('_' in k)]
+    temp_dict = {}
+    for word in temp_vocab:
+        new_word = word
+        if word[len(word)-1]=='_':
+            for i in range(len(word)):
+                if word[i]!='_':
+                    new_word = word[:i]
+                    temp_dict[word] = new_word   
+                    break
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    if verbose: _print_dict(temp_dict)
+    return data
+
+def seperate_end_word_punctuations(data):
+    if verbose: print('#' * 10, 'Step - End word punctuations:')
+    
+    temp_vocab = list(set([c for line in data for c in line.split()]))
+    temp_vocab = [k for k in temp_vocab if (_check_replace(k)) and (not k[len(k)-1].isalnum())]
+    temp_dict = {}
+    for word in temp_vocab:
+        new_word = word
+        for i in range(len(word),0,-1):
+            if word[i-1].isalnum():
+                new_word = word[:i] + ' ' + word[i:]
+                break
+        temp_dict[word] = new_word     
+    temp_dict = {k: v for k, v in temp_dict.items() if k != v}
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    if verbose: _print_dict(temp_dict)
+    return data
+
+
