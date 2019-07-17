@@ -535,3 +535,73 @@ def isolate_numbers(data):
     if verbose: _print_dict(temp_dict)
         
     return data
+
+def regex_split_word(data):
+    local_vocab = {}
+    temp_vocab = _check_vocab(data, local_vocab, response='unknown_list')
+    temp_vocab = [k for k in temp_vocab if _check_replace(k)]
+
+    temp_dict = {}
+    for word in temp_vocab:
+        if len(re.compile('[a-zA-Z0-9\*]').sub('', word))>0:
+            chars = re.compile('[a-zA-Z0-9\*]').sub('', word)
+            temp_dict[word] = ''.join([' ' + c + ' ' if c in chars else c for c in word])
+
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    
+    if verbose: _print_dict(temp_dict)
+    return data
+
+# L33T vocabulary (SLOW)
+# https://simple.wikipedia.org/wiki/Leet
+# Local (only unknown words)
+
+def leet_clean(data):
+    def __convert_leet(word):
+        # basic conversion 
+        word = re.sub('0', 'o', word)
+        word = re.sub('1', 'i', word)
+        word = re.sub('3', 'e', word)
+        word = re.sub('\$', 's', word)
+        word = re.sub('\@', 'a', word)
+        return word
+    if verbose: print('#' * 10, 'Step - L33T (with vocab check):')
+    local_vocab = {}
+    temp_vocab = _check_vocab(data, local_vocab, response='unknown_list')
+    temp_vocab = [k for k in temp_vocab if _check_replace(k)]
+
+    temp_dict = {}
+    for word in temp_vocab:
+        new_word = __convert_leet(word)
+    
+        if (new_word!=word): 
+            if (len(word)>2) and (new_word in local_vocab):
+                temp_dict[word] = new_word
+
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    if verbose: _print_dict(temp_dict) 
+    return data
+    
+
+def clean_open_holded_words(data):
+    if verbose: print('#' * 10, 'Step - Open Holded words:')
+        
+    temp_vocab = list(set([c for line in data for c in line.split()]))
+    temp_vocab = [k for k in temp_vocab if (not _check_replace(k))]
+    temp_dict = {}
+    for word in temp_vocab:
+        temp_dict[word] = re.sub('___', ' ', word[17:-1])
+    data = list(map(lambda x: ' '.join([temp_dict.get(i, i) for i in x.split()]), data))
+    data = list(map(lambda x: ' '.join([i for i in x.split()]), data))
+    
+    return data
+
+def clean_multiple_form(data):
+    if verbose: print('#' * 10, 'Step - Multiple form:')
+    local_vocab = {}
+    temp_vocab = _check_vocab(data, local_vocab, response='unknown_list')
+    temp_vocab = [k for k in temp_vocab if (k[-1:]=='s') and (len(k)>4)]
+    temp_dict = {k:k[:-1] for k in temp_vocab if (k[:-1] in local_vocab)}
+    data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
+    if verbose: _print_dict(temp_dict)
+    return data
