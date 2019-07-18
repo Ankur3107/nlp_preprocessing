@@ -8,6 +8,7 @@ from gensim.utils import deaccent
 from collections import Counter
 
 ### Initial State
+
 verbose = True
 global_lower=True
 
