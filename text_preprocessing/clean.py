@@ -6,12 +6,6 @@ import os, sys, gc, re, warnings, pickle, itertools, emoji, psutil, random, unic
 # custom imports
 from gensim.utils import deaccent
 from collections import Counter
-from bs4 import BeautifulSoup
-from multiprocessing import Pool
-
-warnings.filterwarnings('ignore')
-pd.options.display.max_columns = 10
-pd.options.display.max_colwidth = 200
 
 ### Initial State
 verbose = True
