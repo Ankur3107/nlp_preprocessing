@@ -632,6 +632,33 @@ def clean_v1(data_list):
     return data_list
 
 
+def clean_v2(data_list):
+    #data_list = data.to_list()
+    data_list = to_lower(data_list)
+    data_list = to_normalize(data_list)
+    data_list = remove_href(data_list)
+    data_list = remove_control_char(data_list)
+    data_list = remove_duplicate(data_list)
+    data_list = remove_underscore(data_list)
+    data_list = seperate_spam_chars(data_list)
+    data_list = seperate_brakets_quotes(data_list)
+    data_list = break_short_words(data_list)
+    data_list = break_long_words(data_list)
+    data_list = remove_ending_underscore(data_list)
+    data_list = remove_starting_underscore(data_list)
+    data_list = seperate_end_word_punctuations(data_list)
+    data_list = seperate_start_word_punctuations(data_list)
+    data_list = clean_contractions(data_list)
+    data_list = remove_s(data_list)
+    data_list = isolate_numbers(data_list)
+    data_list = regex_split_word(data_list)
+    data_list = leet_clean(data_list)
+    data_list = clean_open_holded_words(data_list)
+    data_list = clean_multiple_form(data_list)
+
+    return data_list
+
+
 if __name__=='__main__':
 
     parser = argparse.ArgumentParser()
