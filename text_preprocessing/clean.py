@@ -6,6 +6,7 @@ import os, sys, gc, re, warnings, pickle, itertools, emoji, psutil, random, unic
 # custom imports
 from gensim.utils import deaccent
 from collections import Counter
+import argparse
 
 ### Initial State
 verbose = True
@@ -599,3 +600,83 @@ def clean_multiple_form(data):
     data = list(map(lambda x: ' '.join([_make_dict_cleaning(i,temp_dict) for i in x.split()]), data))
     if verbose: _print_dict(temp_dict)
     return data
+
+
+
+#### Main Funtion ######
+
+def clean_v1(data_list):
+    #data_list = data.to_list()
+    data_list = to_lower(data_list)
+    data_list = to_normalize(data_list)
+    data_list = remove_href(data_list)
+    data_list = remove_control_char(data_list)
+    data_list = remove_duplicate(data_list)
+    data_list = remove_underscore(data_list)
+    data_list = seperate_spam_chars(data_list)
+    data_list = seperate_brakets_quotes(data_list)
+    data_list = break_short_words(data_list)
+    data_list = break_long_words(data_list)
+    data_list = remove_ending_underscore(data_list)
+    data_list = remove_starting_underscore(data_list)
+    data_list = seperate_end_word_punctuations(data_list)
+    data_list = seperate_start_word_punctuations(data_list)
+    data_list = clean_contractions(data_list)
+    data_list = remove_s(data_list)
+    data_list = isolate_numbers(data_list)
+    data_list = regex_split_word(data_list)
+    data_list = leet_clean(data_list)
+    data_list = clean_open_holded_words(data_list)
+    data_list = clean_multiple_form(data_list)
+
+    return data_list
+
+
+def clean_v2(data_list):
+    #data_list = data.to_list()
+    data_list = to_lower(data_list)
+    data_list = to_normalize(data_list)
+    data_list = remove_href(data_list)
+    data_list = remove_control_char(data_list)
+    data_list = remove_duplicate(data_list)
+    data_list = remove_underscore(data_list)
+    data_list = seperate_spam_chars(data_list)
+    data_list = seperate_brakets_quotes(data_list)
+    data_list = break_short_words(data_list)
+    data_list = break_long_words(data_list)
+    data_list = remove_ending_underscore(data_list)
+    data_list = remove_starting_underscore(data_list)
+    data_list = seperate_end_word_punctuations(data_list)
+    data_list = seperate_start_word_punctuations(data_list)
+    data_list = clean_contractions(data_list)
+    data_list = remove_s(data_list)
+    data_list = isolate_numbers(data_list)
+    data_list = regex_split_word(data_list)
+    data_list = leet_clean(data_list)
+    data_list = clean_open_holded_words(data_list)
+    data_list = clean_multiple_form(data_list)
+
+    return data_list
+
+
+if __name__=='__main__':
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data_path", help="input data path")
+    parser.add_argument("--output_path", help="output data path")
+    parser.add_argument("--target_column", help="target column")
+
+    DATA_PATH = args.data_path #'data/processed/MH_Investor_Data_processed'
+    OUTPUT_PATH = args.output_path #DATA_PATH+'_v2'
+    C_NAME = args.target_column #'Verbatim'
+
+    data_df = pd.read_csv(DATA_PATH)
+    data = data_df[C_NAME]
+    data_list = data.to_list()
+    data_list = clean_v1(data_list)
+
+    C_OUTPUT_NAME = 'Cleaned_'+C_NAME
+    data_df[C_OUTPUT_NAME] = data_list
+    data_df.to_csv(OUTPUT_PATH)
+    print('Done !')
+
