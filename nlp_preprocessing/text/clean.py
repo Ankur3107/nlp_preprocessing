@@ -1,7 +1,7 @@
 # General imports
 import numpy as np
 import pandas as pd
-import os, sys, gc, re, warnings, pickle, itertools, emoji, psutil, random, unicodedata
+import os, sys, gc, re, warnings, pickle, itertools, emoji, random, unicodedata
 
 # custom imports
 from gensim.utils import deaccent
@@ -605,7 +605,10 @@ def clean_multiple_form(data):
 
 #### Main Funtion ######
 
-def clean_v1(data_list):
+def clean_v1(data_list, v = True,g=True):
+    global verbose, global_lower
+    verbose = v
+    global_lower = g
     #data_list = data.to_list()
     data_list = to_lower(data_list)
     data_list = to_normalize(data_list)
@@ -632,7 +635,7 @@ def clean_v1(data_list):
     return data_list
 
 
-def clean_v2(data_list):
+def clean_v2(data_list, verbose = True,global_lower=True):
     #data_list = data.to_list()
     data_list = to_lower(data_list)
     data_list = to_normalize(data_list)
