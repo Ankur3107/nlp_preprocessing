@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: nlp-preprocessing
+Version: 0.1.1
+Summary: A Package for text preprocessing
+Home-page: https://github.com/Ankur3107/nlp_preprocessing
+Author: Ankur Singh
+Author-email: ankur310794@gmail.com
+License: UNKNOWN
+Description: # text-preprocessing
+        
+        Just call function for cleaning for text cleaning
+        
+        Call dataset module for dataset prepration
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
