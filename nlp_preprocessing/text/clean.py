@@ -1,7 +1,5 @@
 # General imports
-import numpy as np
-import pandas as pd
-import os, sys, gc, re, warnings, pickle, itertools, emoji, random, unicodedata
+import os, sys, re, unicodedata
 
 # custom imports
 from gensim.utils import deaccent
