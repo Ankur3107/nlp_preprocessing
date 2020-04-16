@@ -13,7 +13,7 @@ setuptools.setup(
      long_description_content_type="text/markdown",
      url="https://github.com/Ankur3107/nlp_preprocessing",
      packages=['nlp_preprocessing'],
-     install_requires=['scikit-learn','gensim','numpy'], 
+     install_requires=['scikit-learn','gensim','numpy','spacy','deepdish','tqdm'], 
      classifiers=[
          "Programming Language :: Python :: 3",
          "License :: OSI Approved :: MIT License",
