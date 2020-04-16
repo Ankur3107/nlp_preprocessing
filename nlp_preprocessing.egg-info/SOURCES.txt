@@ -1,6 +1,8 @@
 README.md
 setup.py
 nlp_preprocessing/__init__.py
+nlp_preprocessing/clean.py
+nlp_preprocessing/dataset.py
 nlp_preprocessing/seq_token_generator.py
 nlp_preprocessing.egg-info/PKG-INFO
 nlp_preprocessing.egg-info/SOURCES.txt
