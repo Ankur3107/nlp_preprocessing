@@ -1,4 +1,12 @@
-# text-preprocessing
+# <center>text-preprocessing<center/>
+
+***text-preprocessing*** provides text preprocessing functions i.e. text cleaning, dataset preprocessing, tokenization etc
+
+#### Installation
+
+    pip install text-preprocessing
+
+## Tutorial
 
 ### 1. Text Cleaning
 
