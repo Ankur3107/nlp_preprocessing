@@ -39,3 +39,24 @@ def get_word_sequences(text_list, token_file_path=None, word_dict={}, lemma_dict
         dd.io.save(token_file_path, data)
     
     return pad_sequences(word_sequences, max_length)
+
+def get_tokenids_start_end_position(tokenizer, text, extracted_text,extra_text=None, verbose=False):
+
+    text = '[CLS] '+text+' [SEP]'
+    if extra_text:
+        text = text+' '+extra_text+' [SEP]'
+    index = text.find(extracted_text)
+    
+    first = tokenizer.tokenize(text[0:index])
+    middle = tokenizer.tokenize(text[index:index+len(extracted_text)])
+    last = tokenizer.tokenize(text[index+len(extracted_text):len(text)])
+    
+    if verbose:
+        print(text[0:index], text[index:index+len(extracted_text)], text[index+len(extracted_text):len(text)])
+    
+    tokens = first+middle+last
+    token_ids = tokenizer.convert_tokens_to_ids(tokens)
+    start = len(first)
+    end = len(first)+len(middle)
+    
+    return token_ids, start, end
