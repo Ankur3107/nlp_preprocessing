@@ -6,6 +6,7 @@ import numpy as np
 
 
 def load_vectors(fname, type='index',vocab=None):
+    print('Loading vectors from ', fname,' type: ',type)
     fin = io.open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
     n, d = map(int, fin.readline().split())
     data = {}
@@ -57,11 +58,11 @@ class Processor():
         self.__write_final_embedding(embedding_matrix, embedding_file)
 
         print('Processing Done !')
-        print('vocab stored at :',vocab_file)
-        print('embedding stored at :', embedding_file)
+        print('Vocab stored at :',vocab_file ,' of size: ',len(final_vocab))
+        print('Embedding stored at :', embedding_file, 'of shape: ', embedding_matrix.shape)
 
     def __get_final_embedding(self, embedding_list, special_tokens):
-
+        print('Making Final Embedding ...')
         for t in special_tokens:
             embedding_list.append(list(np.random.uniform(-1,1,300)))
 
@@ -69,10 +70,12 @@ class Processor():
         return embedding_matrix
 
     def __write_final_embedding(self, embedding_matrix, embedding_file):
+        print('Writing embedding at ', embedding_file)
         np.save(embedding_file, embedding_matrix)
 
 
     def __get_unique(self, tokenizer, text_list):
+        print('Generating unique tokens ...')
         unique_subword = set()
         for i in tqdm.tqdm(range(len(text_list))):
             subword_list = tokenizer.tokenize(str(text_list[i]))
@@ -82,9 +85,8 @@ class Processor():
         return list(unique_subword)
 
     def __write(self, text_list, file_name):
+        print('Writing vocab at ', file_name)
         with open(file_name, 'w') as file:
             for key in text_list:
                 file.write(key)
                 file.write('\n')
-
-
