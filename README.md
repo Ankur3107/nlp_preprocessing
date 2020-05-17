@@ -77,3 +77,27 @@ There are multiple cleaning functions:
     print(tokens)
 
 ### 4. Token embedding creator
+
+    from nlp_preprocessing import token_embedding_creator
+
+    vector_file='../input/fasttext-crawl-300d-2m-with-subword/crawl-300d-2m-subword/crawl-300d-2M-subword.vec'
+    input_file='../input/complete-tweet-sentiment-extraction-data/tweet_dataset.csv'
+    column_name='text'
+
+    processor = token_embedding_creator.Processor(vector_file, input_file, column_name)
+
+    processor.process('.')
+
+    #Loading vectors from  ../input/fasttext-crawl-300d-2m-with-subword/crawl-300d-2m-subword/crawl-300d-2M-subword.vec  type:  index
+    #Writing vocab at  ./full_vocab.txt
+    #1%|          | 218/40000 [00:00<00:18, 2176.72it/s]
+    #Generating unique tokens ...
+    #100%|██████████| 40000/40000 [00:18<00:00, 2180.53it/s]
+    #Writing vocab at  ./vocab.txt
+    #Loading vectors from  ../input/fasttext-crawl-300d-2m-with-subword/crawl-300d-2m-subword/crawl-300d-2M-subword.vec  type:  embedding
+    #Writing vocab at  ./vocab.txt
+    #Making Final Embedding ...
+    #Writing embedding at  ./embeddings.npy
+    #Processing Done !
+    #Vocab stored at : ./vocab.txt  of size:  25475
+    #Embedding stored at : ./embeddings.npy of shape:  (25475, 300)
