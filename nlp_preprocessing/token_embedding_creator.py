@@ -1,9 +1,8 @@
 import io
 import pandas as pd
-import tokenization
+from .tokenization import FullTokenizer, load_vocab
 import tqdm
 import numpy as np
-
 
 def load_vectors(fname, type='index',vocab=None):
     print('Loading vectors from ', fname,' type: ',type)
@@ -37,7 +36,7 @@ class Processor():
         full_vocab_file = output_dir+'/full_vocab.txt'
         self.__write(list(vectors_dict.keys()), full_vocab_file)
 
-        full_vocab_tokenizer = tokenization.FullTokenizer(
+        full_vocab_tokenizer = FullTokenizer(
             vocab_file=full_vocab_file, do_lower_case=True)
         
         unique_subword = self.__get_unique(full_vocab_tokenizer, df[self.column_name].values)
@@ -45,8 +44,8 @@ class Processor():
         vocab_file = output_dir+'/vocab.txt'
         self.__write(unique_subword, vocab_file)
 
-        new_vocab = tokenization.load_vocab(vocab_file)
-        new_vectors_dict = load_vectors(self.vector_file, type='embedding', new_vocab)
+        new_vocab = load_vocab(vocab_file)
+        new_vectors_dict = load_vectors(self.vector_file, 'embedding', new_vocab)
 
         final_vocab = list(new_vectors_dict.keys())
         final_vocab.extend(special_tokens)

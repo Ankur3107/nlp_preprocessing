@@ -76,3 +76,4 @@ There are multiple cleaning functions:
     tokens = seq_gen.get_word_sequences(texts)
     print(tokens)
 
+### 4. Token embedding creator
