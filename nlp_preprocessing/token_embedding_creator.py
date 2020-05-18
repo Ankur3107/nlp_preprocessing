@@ -34,7 +34,10 @@ class Processor():
         df = pd.read_csv(self.input_file)
 
         full_vocab_file = output_dir+'/full_vocab.txt'
-        self.__write(list(vectors_dict.keys()), full_vocab_file)
+        full_vocab = list(vectors_dict.keys())
+        full_vocab.extend(special_tokens)
+        
+        self.__write(full_vocab, full_vocab_file)
 
         full_vocab_tokenizer = FullTokenizer(
             vocab_file=full_vocab_file, do_lower_case=True)
@@ -76,11 +79,17 @@ class Processor():
     def __get_unique(self, tokenizer, text_list):
         print('Generating unique tokens ...')
         unique_subword = set()
+        unknown_count = 0
         for i in tqdm.tqdm(range(len(text_list))):
             subword_list = tokenizer.tokenize(str(text_list[i]))
             
             for subword in subword_list:
+                if subword=='[UNK]':
+                    unknown_count+=1
                 unique_subword.add(subword)
+        
+        print('No of unique subwords :', len(list(unique_subword)))
+        print('No of Unknowns:', unknown_count)
         return list(unique_subword)
 
     def __write(self, text_list, file_name):
