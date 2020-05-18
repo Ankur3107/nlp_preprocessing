@@ -85,8 +85,10 @@ There are multiple cleaning functions:
     column_name='text'
 
     processor = token_embedding_creator.Processor(vector_file, input_file, column_name)
-
-    processor.process('.')
+    output_dir = '.'
+    special_tokens = ['[UNK]','[SEP]']
+    
+    processor.process(output_dir, special_tokens)
 
     #Loading vectors from  ../input/fasttext-crawl-300d-2m-with-subword/crawl-300d-2m-subword/crawl-300d-2M-subword.vec  type:  index
     #Writing vocab at  ./full_vocab.txt

@@ -319,8 +319,7 @@ class WordpieceTokenizer(object):
         cur_substr = None
         while start < end:
           substr = "".join(chars[start:end])
-          if start > 0:
-            substr = "##" + substr
+          
           if substr in self.vocab:
             cur_substr = substr
             break
