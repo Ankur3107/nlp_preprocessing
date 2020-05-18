@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
      name='nlp_preprocessing',  
-     version='0.1.9',
+     version='0.1.10',
      author="Ankur Singh",
      author_email="ankur310794@gmail.com",
      description="A Package for text preprocessing",
