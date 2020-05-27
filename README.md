@@ -103,3 +103,13 @@ There are multiple cleaning functions:
     #Processing Done !
     #Vocab stored at : ./vocab.txt  of size:  25475
     #Embedding stored at : ./embeddings.npy of shape:  (25475, 300)
+
+### 5. seq_parser_token_generator
+
+    from nlp_preprocessing import seq_parser_token_generator
+
+    text = ['hi how are you']
+
+    pos_token, tag_token, dep_token = get_tokens(text[0])
+
+    pos_tokens, tag_tokens, dep_tokens = get_tokens_plus(text, 120)
