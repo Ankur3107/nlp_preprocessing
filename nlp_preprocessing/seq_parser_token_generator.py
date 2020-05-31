@@ -1,9 +1,18 @@
-from en_core_web_sm import load
+import spacy
 import tqdm
 import numpy as np
 
 
-nlp = load()
+try:
+    nlp = spacy.load('en')
+except OSError:
+    print('Downloading language model for the spaCy POS tagger\n'
+        "(don't worry, this will only happen once)", file=stderr)
+    from spacy.cli import download
+    download('en_core_web_sm')
+    nlp = spacy.load('en_core_web_sm', disable=['parser','ner','tagger'])
+    nlp.vocab.add_flag(lambda s: s.lower() in spacy.lang.en.stop_words.STOP_WORDS, spacy.attrs.IS_STOP)
+
 
 pos_dict={'VERB': 0,
   'NOUN': 1,
