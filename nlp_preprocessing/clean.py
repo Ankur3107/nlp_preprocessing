@@ -659,6 +659,34 @@ def clean_v2(data_list, verbose = True,global_lower=True):
 
     return data_list
 
+CLEAN_FUNS = {
+    'to_lower' : to_lower,
+    'to_normalize' : to_normalize,
+    'remove_href' : remove_href,
+    'remove_control_char' : remove_control_char,
+    'remove_duplicate' : remove_duplicate,
+    'remove_underscore' : remove_underscore,
+    'seperate_spam_chars' : seperate_spam_chars,
+    'seperate_brakets_quotes' : seperate_brakets_quotes,
+    'break_short_words' : break_short_words,
+    'break_long_words' : break_long_words,
+    'remove_ending_underscore' : remove_ending_underscore,
+    'remove_starting_underscore' : remove_starting_underscore,
+    'seperate_end_word_punctuations' : seperate_end_word_punctuations,
+    'seperate_start_word_punctuations' : seperate_start_word_punctuations,
+    'clean_contractions' : clean_contractions,
+    'remove_s' : remove_s,
+    'isolate_numbers' : isolate_numbers,
+    'regex_split_word' : regex_split_word,
+    'leet_clean' : leet_clean,
+    'clean_open_holded_words' : clean_open_holded_words,
+    'clean_multiple_form' : clean_multiple_form
+}
+
+class Clean():
+    def __init__(self, clean_fn_ordered_list=['']):
+        pass
+
 
 if __name__=='__main__':
 
