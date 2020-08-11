@@ -684,8 +684,15 @@ CLEAN_FUNS = {
 }
 
 class Clean():
-    def __init__(self, clean_fn_ordered_list=['']):
-        pass
+    def __init__(self, clean_fn_ordered_list=list(CLEAN_FUNS.keys())):
+        self.clean_fns = clean_fn_ordered_list
+
+    def __call__(self, input_texts: list):
+
+        for fn in self.clean_fns:
+            input_texts = CLEAN_FUNS[fn](input_texts)
+
+        return input_texts
 
 
 if __name__=='__main__':
