@@ -6,14 +6,117 @@ import os
 
 
 try:
-    nlp = spacy.load('en')
+    nlp = spacy.load('en_core_web_sm')
+    spacy_tokenizer = nlp.tokenizer
 except OSError:
     print('Downloading language model for the spaCy POS tagger\n'
         "(don't worry, this will only happen once)", file=stderr)
     from spacy.cli import download
     download('en_core_web_sm')
     nlp = spacy.load('en_core_web_sm', disable=['parser','ner','tagger'])
-    nlp.vocab.add_flag(lambda s: s.lower() in spacy.lang.en.stop_words.STOP_WORDS, spacy.attrs.IS_STOP)
+    spacy_tokenizer = nlp.tokenizer
+
+def load_vocab(vocab_file):
+  """Loads a vocabulary file into a dictionary."""
+  vocab = collections.OrderedDict()
+  index = 0
+  with open(vocab_file, "r") as reader:
+    while True:
+      token = convert_to_unicode(reader.readline())
+      if not token:
+        break
+      token = token.strip()
+      vocab[token] = index
+      index += 1
+  return vocab
+
+def convert_by_vocab(vocab, items):
+  """Converts a sequence of [tokens|ids] using the vocab."""
+  output = []
+  for item in items:
+    output.append(vocab[item])
+  return output
+
+class SpacyTokenizer():
+
+    def __init__(self, vocab_file=None, spacy_tokenizer=spacy_tokenizer, special_token=['[PAD]'], pad_token_index=0):
+        self.tokenizer = spacy_tokenizer
+        self.vocab = load_vocab(vocab_file) if vocab_file else self.__get_initial_vocab(special_token)
+        self.inv_vocab = {v: k for k, v in self.vocab.items()}
+        self.current_index = len(self.vocab)
+        self.pad_token_index = pad_token_index
+
+    def __get_initial_vocab(self, special_tokens):
+        vocab = {}
+        index = 0
+        for t in special_tokens:
+            if t not in vocab:
+                vocab[t] = index
+                index+=1
+        self.vocab = vocab
+        self.current_index = index
+        return self.vocab
+        
+
+    def tokenize(self, input_texts):
+        docs = self.tokenizer.pipe(input_texts, n_threads = 4)
+        
+        output_tokens = []
+        for doc in tqdm(docs):
+            output_tokens.append([token.text for token in doc])
+            for token in doc:
+                if (token.text not in self.vocab):
+                    self.vocab[token.text] = self.current_index
+                    self.current_index += 1
+        
+        self.inv_vocab = {v: k for k, v in self.vocab.items()}
+        return output_tokens
+
+    def __add_padding(self, tokens, max_seq):
+
+        if len(tokens)==max_seq:
+            return tokens
+        elif len(tokens) > max_seq:
+            return tokens[0:max_seq]
+        else:
+            while(len(tokens)<max_seq):
+                tokens.append(self.pad_token_index)
+            return tokens
+
+    def encode(self, text, max_seq=128):
+        doc = self.tokenizer(text)
+
+        tokens = [token.text for token in doc]
+        tokens = self.convert_tokens_to_ids(tokens)
+        tokens = self.__add_padding(tokens, max_seq)
+
+        return tokens
+
+    def encode_plus(self, input_texts, max_seq=128):
+
+        docs = self.tokenizer.pipe(input_texts, n_threads = 4)
+        
+        output_tokens = []
+        for doc in tqdm(docs):
+            token_seq = []
+            for token in doc:
+                if (token.text not in self.vocab):
+                    self.vocab[token.text] = self.current_index
+                    self.current_index += 1
+                token_seq.append(self.vocab[token.text])
+            token_seq = self.__add_padding(token_seq, max_seq)
+            output_tokens.append(token_seq)
+        
+        self.inv_vocab = {v: k for k, v in self.vocab.items()}
+        return output_tokens
+    
+    def convert_tokens_to_ids(self, tokens):
+        return convert_by_vocab(self.vocab, tokens)
+    
+    def convert_ids_to_tokens(self, ids):
+        return convert_by_vocab(self.inv_vocab, ids)
+    
+
 
 def get_word_sequences(text_list, token_file_path=None, word_dict={}, lemma_dict={}, word_index=1, max_length = 250):
     
@@ -24,7 +127,7 @@ def get_word_sequences(text_list, token_file_path=None, word_dict={}, lemma_dict
         word_index = token_data['word_index']
         
     previous_word_index = word_index
-    docs = nlp.pipe(text_list, n_threads = 4)
+    docs = nlp.tokenizer.pipe(text_list, n_threads = 4)
     word_sequences = []
 
     for doc in tqdm(docs):
