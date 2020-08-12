@@ -21,7 +21,7 @@ def load_vectors(fname, type='index',vocab=None):
         
     return data
 
-class Processor():
+class EmbeddingProcessor():
     def __init__(self,vector_file, input_file, column_name):
         self.vector_file = vector_file
         self.input_file = input_file

@@ -87,6 +87,10 @@ class SpacyTokenizer():
         doc = self.tokenizer(text)
 
         tokens = [token.text for token in doc]
+        for token in doc:
+            if (token.text not in self.vocab):
+                self.vocab[token.text] = self.current_index
+                self.current_index += 1
         tokens = self.convert_tokens_to_ids(tokens)
         tokens = self.__add_padding(tokens, max_seq)
 
@@ -109,6 +113,25 @@ class SpacyTokenizer():
         
         self.inv_vocab = {v: k for k, v in self.vocab.items()}
         return output_tokens
+
+    def __call__(self, inputs, call_type='encode', max_seq=None):
+
+        if call_type == 'encode':
+            if type(inputs) == str:
+                return self.encode(inputs, max_seq=max_seq)
+            else:
+                print('input type error !')
+        
+        elif call_type == 'encode_plus':
+            return self.encode_plus(inputs, max_seq=max_seq)
+
+        elif call_type == 'tokenize':
+            return self.tokenize(inputs)
+
+        else:
+            print(call_type, 'is not defined !')
+
+        return None
     
     def convert_tokens_to_ids(self, tokens):
         return convert_by_vocab(self.vocab, tokens)
