@@ -1,0 +1,5 @@
+site_name: nlp-preprocessing
+nav:
+    - Home: index.md
+    
+theme: readthedocs
