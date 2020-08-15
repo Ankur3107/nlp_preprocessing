@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Cleaning - nlp-preprocessing</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cleaning";
+    var mkdocs_page_input_path = "cleaning.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> nlp-preprocessing</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Cleaning</a>
+    <ul class="current">
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../dataset/">Dataset</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../tokenization/">Tokenization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../vocab_embedding_extractor/">Vocab & Embedding Extractor</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">nlp-preprocessing</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Cleaning</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="text-cleaning"><center>Text Cleaning </center></h2>
+<p>The <code>nlp_preprocessing.clean</code> module allow efficient way of text cleaning.</p>
+<pre><code class="python">from nlp_preprocessing.clean import *
+</code></pre>
+
+<p><code>Clean</code> class initiator takes ordered list of cleaning functions(list given below) and using <code>__call__</code> function we can apply each function on list of string.</p>
+<pre><code>CLEAN_FUNS = {
+    'to_lower' : to_lower(),
+    'to_normalize' : to_normalize(),
+    'remove_href' : remove_href(),
+    'remove_control_char' : remove_control_char(),
+    'remove_duplicate' : remove_duplicate(),
+    'remove_underscore' : remove_underscore(),
+    'seperate_spam_chars' : seperate_spam_chars(),
+    'seperate_brakets_quotes' : seperate_brakets_quotes(),
+    'break_short_words' : break_short_words(),
+    'break_long_words' : break_long_words(),
+    'remove_ending_underscore' : remove_ending_underscore(),
+    'remove_starting_underscore' : remove_starting_underscore(),
+    'seperate_end_word_punctuations' : seperate_end_word_punctuations(),
+    'seperate_start_word_punctuations' : seperate_start_word_punctuations(),
+    'clean_contractions' : clean_contractions(),
+    'remove_s' : remove_s(),
+    'isolate_numbers' : isolate_numbers(),
+    'regex_split_word' : regex_split_word(),
+    'leet_clean' : leet_clean(),
+    'clean_open_holded_words' : clean_open_holded_words(),
+    'clean_multiple_form' : clean_multiple_form()
+}
+</code></pre>
+<h2 id="Clean" class="doc_header"><code>class</code> <code>Clean</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L686" class="source_link" style="float:right">[source]</a></h2>
+
+<blockquote>
+<p><code>Clean</code>(<strong><code>clean_fn_ordered_list</code></strong>=<em><code>['to_lower', 'to_normalize', 'remove_href', 'remove_control_char', 'remove_duplicate', 'remove_underscore', 'seperate_spam_chars', 'seperate_brakets_quotes', 'break_short_words', 'break_long_words', 'remove_ending_underscore', 'remove_starting_underscore', 'seperate_end_word_punctuations', 'seperate_start_word_punctuations', 'clean_contractions', 'remove_s', 'isolate_numbers', 'regex_split_word', 'leet_clean', 'clean_open_holded_words', 'clean_multiple_form']</code></em>)</p>
+</blockquote>
+<p>Examples:</p>
+<pre><code class="python">texts = ['Hi, how are you', &quot;I am's good&quot;]
+cleaned_text = Clean()(texts)
+print('Output :', cleaned_text)
+</code></pre>
+
+<pre><code>########## Step - Lowering everything:
+########## Step - Normalize chars and dots:
+########## Step - Remove hrefs:
+########## Step - Control Chars:
+########## Step - Duplicated Chars:
+Total Words : 7
+########## Step - Remove underscore:
+Total Words : 7
+['hi, how are you']
+########## Step - Spam chars repetition:
+Total Words : 7
+{}
+########## Step - Brackets and quotes:
+########## Step - Break long words:
+########## Step - Break long words:
+########## Step - Remove ending underscore:
+Total Words : 7
+########## Step - Remove starting underscore:
+Total Words : 7
+########## Step - End word punctuations:
+hi, --- hi ,
+########## Step - Start word punctuations:
+########## Step - Contractions:
+Total Words : 8
+########## Step - Remove "s:
+Total Words : 8
+am's --- am
+########## Step - Isolate numbers:
+Total Words : 8
+Total Words : 8
+, ---  , 
+########## Step - L33T (with vocab check):
+Total Words : 8
+########## Step - Open Holded words:
+########## Step - Multiple form:
+Total Words : 8
+Output : ['hi , how are you', 'i am good']
+</code></pre>
+<pre><code class="python">texts = ['Hi, how are you', &quot;I am's good&quot;]
+cleaned_text = Clean(['to_lower','remove_s','seperate_end_word_punctuations'])(texts)
+print('Output :', cleaned_text)
+</code></pre>
+
+<pre><code>########## Step - Lowering everything:
+########## Step - Remove "s:
+Total Words : 7
+am's --- am
+########## Step - End word punctuations:
+hi, --- hi ,
+Output : ['hi , how are you', 'i am good']
+</code></pre>
+<p>All cleaning functions takes list of string as input and map function on it</p>
+<h4 id="to_lower" class="doc_header"><code>to_lower</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L55" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>to_lower</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="to_normalize" class="doc_header"><code>to_normalize</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L60" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>to_normalize</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="remove_href" class="doc_header"><code>remove_href</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L105" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>remove_href</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="remove_control_char" class="doc_header"><code>remove_control_char</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L97" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>remove_control_char</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="remove_duplicate" class="doc_header"><code>remove_duplicate</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L110" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>remove_duplicate</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="remove_underscore" class="doc_header"><code>remove_underscore</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L136" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>remove_underscore</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="seperate_spam_chars" class="doc_header"><code>seperate_spam_chars</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L150" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>seperate_spam_chars</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="seperate_brakets_quotes" class="doc_header"><code>seperate_brakets_quotes</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L163" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>seperate_brakets_quotes</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="break_short_words" class="doc_header"><code>break_short_words</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L170" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>break_short_words</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="break_long_words" class="doc_header"><code>break_long_words</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L186" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>break_long_words</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="remove_ending_underscore" class="doc_header"><code>remove_ending_underscore</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L206" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>remove_ending_underscore</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="remove_starting_underscore" class="doc_header"><code>remove_starting_underscore</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L224" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>remove_starting_underscore</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="seperate_end_word_punctuations" class="doc_header"><code>seperate_end_word_punctuations</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L242" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>seperate_end_word_punctuations</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="seperate_start_word_punctuations" class="doc_header"><code>seperate_start_word_punctuations</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L260" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>seperate_start_word_punctuations</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="clean_contractions" class="doc_header"><code>clean_contractions</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L278" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>clean_contractions</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="remove_s" class="doc_header"><code>remove_s</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L501" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>remove_s</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="isolate_numbers" class="doc_header"><code>isolate_numbers</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L511" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>isolate_numbers</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="regex_split_word" class="doc_header"><code>regex_split_word</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L532" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>regex_split_word</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="leet_clean" class="doc_header"><code>leet_clean</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/clean.py#L552" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>leet_clean</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="clean_open_holded_words" class="doc_header"><code>clean_open_holded_words</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L579" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>clean_open_holded_words</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<h4 id="clean_multiple_form" class="doc_header"><code>clean_multiple_form</code><a href="nhttps://github.com/Ankur3107/nlp_preprocessing/blob/master/lp_preprocessing/clean.py#L592" class="source_link" style="float:right">[source]</a></h4>
+
+<blockquote>
+<p><code>clean_multiple_form</code>(<strong><code>data</code></strong>)</p>
+</blockquote>
+<pre><code class="python">
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../dataset/" class="btn btn-neutral float-right" title="Dataset">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../dataset/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

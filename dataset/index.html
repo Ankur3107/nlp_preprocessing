@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Dataset - nlp-preprocessing</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Dataset";
+    var mkdocs_page_input_path = "dataset.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> nlp-preprocessing</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../cleaning/">Cleaning</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Dataset</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../tokenization/">Tokenization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../vocab_embedding_extractor/">Vocab & Embedding Extractor</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">nlp-preprocessing</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Dataset</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <pre><code class="python">from nlp_preprocessing.dataset import Dataset
+</code></pre>
+
+<p><code>Dataset</code> allow to split in test-train and encode (label or one-hot). It allow both multi-label and multi-class split</p>
+<h2 id="Dataset" class="doc_header"><code>class</code> <code>Dataset</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/dataset.py#L6" class="source_link" style="float:right">[source]</a></h2>
+
+<blockquote>
+<p><code>Dataset</code>(<strong><code>data_config</code></strong>)</p>
+</blockquote>
+<p><code>Dataset</code> allow split and encoding using external config file</p>
+<p>Args:</p>
+<pre><code>data_config (dict): config dict
+example:
+    data_config = {
+                'data_class':'multi-class',
+                'x_columns':[],
+                'y_columns':[],
+                'one_hot_encoded_columns':[],
+                'label_encoded_columns':[],
+                'data':None,
+                'split_ratio':0.2,
+                'random_state':3107
+            }
+    where data_class: ['multi-class','multi-label'] and data: it should be dataframe
+</code></pre>
+<p>Example</p>
+<pre><code class="python">import pandas as pd
+text = ['I am Test 1','I am Test 2']
+label = ['A','B']
+aspect = ['C','D']
+data = pd.DataFrame({'text':text*5,'label':label*5,'aspect':aspect*5})
+data
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>label</th>
+      <th>aspect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>I am Test 1</td>
+      <td>A</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>I am Test 2</td>
+      <td>B</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>I am Test 1</td>
+      <td>A</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>I am Test 2</td>
+      <td>B</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>I am Test 1</td>
+      <td>A</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>I am Test 2</td>
+      <td>B</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>I am Test 1</td>
+      <td>A</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>I am Test 2</td>
+      <td>B</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>I am Test 1</td>
+      <td>A</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>I am Test 2</td>
+      <td>B</td>
+      <td>D</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="python">data_config = {
+                'data_class':'multi-class',
+                'x_columns':['text','aspect'],
+                'y_columns':['label'],
+                'one_hot_encoded_columns':[],
+                'label_encoded_columns':['label','aspect'],
+                'data':data,
+                'split_ratio':0.2
+              }
+dataset = Dataset(data_config)
+</code></pre>
+
+<pre><code class="python">dataset.data_config
+</code></pre>
+
+<pre><code>{'data_class': 'multi-class',
+ 'x_columns': ['text', 'aspect'],
+ 'y_columns': ['label'],
+ 'one_hot_encoded_columns': [],
+ 'label_encoded_columns': ['label', 'aspect'],
+ 'data':           text label aspect
+ 0  I am Test 1     A      C
+ 1  I am Test 2     B      D
+ 2  I am Test 1     A      C
+ 3  I am Test 2     B      D
+ 4  I am Test 1     A      C
+ 5  I am Test 2     B      D
+ 6  I am Test 1     A      C
+ 7  I am Test 2     B      D
+ 8  I am Test 1     A      C
+ 9  I am Test 2     B      D,
+ 'split_ratio': 0.2,
+ 'random_state': 3107}
+</code></pre>
+<pre><code class="python">train, test = dataset.get_train_test_data()
+train['Y_train'],train['X_train']
+</code></pre>
+
+<pre><code>({'label': array([0, 1, 1, 0, 0, 1, 0, 1])},
+ {'text': array(['I am Test 1', 'I am Test 2', 'I am Test 2', 'I am Test 1',
+         'I am Test 1', 'I am Test 2', 'I am Test 1', 'I am Test 2'],
+        dtype=object), 'aspect': array([0, 1, 1, 0, 0, 1, 0, 1])})
+</code></pre>
+<pre><code class="python">test['Y_test'],test['X_test']
+</code></pre>
+
+<pre><code>({'label': array([0, 1])},
+ {'text': array(['I am Test 1', 'I am Test 2'], dtype=object),
+  'aspect': array([0, 1])})
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tokenization/" class="btn btn-neutral float-right" title="Tokenization">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cleaning/" class="btn btn-neutral" title="Cleaning"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../cleaning/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../tokenization/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
