@@ -1,5 +1,7 @@
 site_name: nlp-preprocessing
 nav:
     - Home: index.md
-    
+    - Cleaning: cleaning.md
+    - Tokenization: tokenization.md
+    - Token & Embedding Generator: token_embedding_generator.md
 theme: readthedocs
