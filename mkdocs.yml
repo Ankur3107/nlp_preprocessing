@@ -3,5 +3,5 @@ nav:
     - Home: index.md
     - Cleaning: cleaning.md
     - Tokenization: tokenization.md
-    - Token & Embedding Generator: token_embedding_generator.md
+    - Vocab & Embedding Extractor: vocab_embedding_extractor.md
 theme: readthedocs

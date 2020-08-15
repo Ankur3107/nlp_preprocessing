@@ -147,14 +147,14 @@ class SpacyTokenizer():
         self.inv_vocab = {v: k for k, v in self.vocab.items()}
         return output_tokens
 
-    def __call__(self, inputs, call_type='encode', max_seq=None):
+    def __call__(self, inputs, call_type='tokenize', max_seq=None):
         """`__call__` method allow to call encode, encode_plus and tokenize from single interface.
 
         Args:
 
             inputs (List or string): Input can be string or list of text
 
-            call_type (str, optional): can be encode, encode_plus, tokenize. Defaults to 'encode'.
+            call_type (str, optional): can be encode, encode_plus, tokenize. Defaults to 'tokenize'.
 
             max_seq ([type], optional): it applies for encode and encode_plus call_type Defaults to None (for tokenzie call_type). 
 

@@ -160,14 +160,14 @@ class SpacyParseTokenizer():
                 tokens.append(0)
             return tokens
 
-    def __call__(self, inputs, call_type='encode', max_seq=None):
+    def __call__(self, inputs, call_type='tokenize', max_seq=None):
         """`__call__` method allow a single interface to call encode, encode_plus and tokenize methods
 
         Args:
 
             inputs (List or string): It can be string (for encode call type) or List for encode_plus and tokenize
 
-            call_type (str, optional): can be encode, encode_plus, tokenize. Defaults to 'encode'.
+            call_type (str, optional): can be encode, encode_plus, tokenize. Defaults to 'tokenize'.
 
             max_seq ([type], optional): it applies for encode and encode_plus call_type Defaults to None (for tokenzie call_type). 
 
@@ -184,8 +184,8 @@ class SpacyParseTokenizer():
         elif call_type == 'encode_plus':
             return self.encode_plus(inputs, max_seq=max_seq)
 
-        elif call_type == 'tokenizer':
-            return self.tokenizer(inputs)
+        elif call_type == 'tokenize':
+            return self.tokenize(inputs)
 
         else:
             print(call_type, 'is not defined !')

@@ -21,7 +21,18 @@ def load_vectors(fname, type='index',vocab=None):
         
     return data
 
-class EmbeddingProcessor():
+class VocabEmbeddingExtractor():
+    """`VocabEmbeddingExtractor` takes files(input file, vector file) and extract vocab and corrosponding embeddings from word2vec, fasttext, glove etc. word embeddings
+
+        Args:
+
+            vector_file (string): external vector file i.e. word2vec, glove, fasttext
+
+            input_file (string): input file in csv
+
+            column_name (string): text column name from input file
+
+        """
     def __init__(self,vector_file, input_file, column_name):
         self.vector_file = vector_file
         self.input_file = input_file
@@ -29,6 +40,14 @@ class EmbeddingProcessor():
 
 
     def process(self, output_dir, special_tokens=[]):
+        """`process` method allow to process and save output to output_dir
+
+        Args:
+
+            output_dir (string): output directory
+
+            special_tokens (list of string, optional): List all special tokens i.e [PAD], [SEP] . Defaults to [].
+        """
 
         vectors_dict = load_vectors(self.vector_file)
         df = pd.read_csv(self.input_file)
