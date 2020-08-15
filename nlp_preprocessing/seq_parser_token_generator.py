@@ -161,6 +161,19 @@ class SpacyParseTokenizer():
             return tokens
 
     def __call__(self, inputs, call_type='encode', max_seq=None):
+        """`__call__` method allow a single interface to call encode, encode_plus and tokenize methods
+
+        Args:
+
+            inputs (List or string): It can be string (for encode call type) or List for encode_plus and tokenize
+
+            call_type (str, optional): can be encode, encode_plus, tokenize. Defaults to 'encode'.
+
+            max_seq ([type], optional): it applies for encode and encode_plus call_type Defaults to None (for tokenzie call_type). 
+
+        Returns:
+            results: dict (contains keys i.e. tag, pos, dep)
+        """
 
         if call_type == 'encode':
             if type(inputs) == str:
@@ -180,6 +193,18 @@ class SpacyParseTokenizer():
         return None
 
     def encode(self, text, max_seq=128):
+        """`encode` method allow to encode text into ids with max_seq lenght
+
+        Args:
+
+            text (string): input text
+
+            max_seq (int, optional): Defaults to 128.
+
+        Returns:
+
+            results: dict
+        """
         doc = nlp(text)
         results = {}
 
@@ -203,6 +228,19 @@ class SpacyParseTokenizer():
         return results
 
     def encode_plus(self, input_texts, max_seq=128):
+
+        """`encode_plus` method allow to encode list of text into list of ids with max_seq lenght
+
+        Args:
+
+            input_texts (List): List of text
+
+            max_seq (int, optional): Defaults to 128.
+
+        Returns:
+
+            results: dict
+        """
 
         docs = nlp.pipe(input_texts, n_threads = 4)
         pos_tokens = []
@@ -242,6 +280,16 @@ class SpacyParseTokenizer():
     
 
     def tokenize(self, input_texts):
+        """`tokenizer` method allow to tokenize text
+
+        Args:
+
+            input_texts (List): Takes list of text(string)
+
+        Returns:
+
+            results: dict
+        """
 
         docs = nlp.pipe(input_texts, n_threads = 4)
         pos_tokens = []

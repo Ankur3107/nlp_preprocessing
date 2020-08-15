@@ -61,9 +61,11 @@ class SpacyTokenizer():
         """`tokenizer` method allow to tokenize text
 
         Args:
+
             input_texts (List): Takes list of text(string)
 
         Returns:
+
             tokens: List[List]
         """
         docs = self.tokenizer.pipe(input_texts, n_threads = 4)
@@ -94,10 +96,13 @@ class SpacyTokenizer():
         """`encode` method allow to encode text into ids with max_seq lenght
 
         Args:
+
             text (string): input text
+
             max_seq (int, optional): Defaults to 128.
 
         Returns:
+
             tokens: List of token
         """
         doc = self.tokenizer(text)
@@ -116,10 +121,13 @@ class SpacyTokenizer():
         """`encode_plus` method allow to encode list of text into list of ids with max_seq lenght
 
         Args:
+
             input_texts (List): List of text
+
             max_seq (int, optional): Defaults to 128.
 
         Returns:
+
             tokens: List of List of token
         """
 
@@ -140,15 +148,20 @@ class SpacyTokenizer():
         return output_tokens
 
     def __call__(self, inputs, call_type='encode', max_seq=None):
-        """`__call__` method allow to 
+        """`__call__` method allow to call encode, encode_plus and tokenize from single interface.
 
         Args:
-            inputs ([type]): [description]
-            call_type (str, optional): [description]. Defaults to 'encode'.
-            max_seq ([type], optional): [description]. Defaults to None.
+
+            inputs (List or string): Input can be string or list of text
+
+            call_type (str, optional): can be encode, encode_plus, tokenize. Defaults to 'encode'.
+
+            max_seq ([type], optional): it applies for encode and encode_plus call_type Defaults to None (for tokenzie call_type). 
+
 
         Returns:
-            [type]: [description]
+        
+            tokens or ids: List or List of List
         """
 
         if call_type == 'encode':
