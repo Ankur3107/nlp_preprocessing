@@ -5,13 +5,13 @@ from nlp_preprocessing.seq_token_generator import *
 `SpacyTokenizer` allow to tokenize your text. `__call__` method can 
 
 
-<h2 id="SpacyTokenizer" class="doc_header"><code>class</code> <code>SpacyTokenizer</code><a href="nlp_preprocessing/seq_token_generator.py#L40" class="source_link" style="float:right">[source]</a></h2>
+<h2 id="SpacyTokenizer" class="doc_header"><code>class</code> <code>SpacyTokenizer</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_token_generator.py#L40" class="source_link" style="float:right">[source]</a></h2>
 
 > <code>SpacyTokenizer</code>(**`vocab_file`**=*`None`*, **`spacy_tokenizer`**=*`<spacy.tokenizer.Tokenizer object at 0x167c88950>`*, **`special_token`**=*`['[PAD]']`*, **`pad_token_index`**=*`0`*)
 
 
 
-<h4 id="SpacyTokenizer.__call__" class="doc_header"><code>SpacyTokenizer.__call__</code><a href="nlp_preprocessing/seq_token_generator.py#L150" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="SpacyTokenizer.__call__" class="doc_header"><code>SpacyTokenizer.__call__</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_token_generator.py#L150" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>SpacyTokenizer.__call__</code>(**`inputs`**, **`call_type`**=*`'tokenize'`*, **`max_seq`**=*`None`*)
 
@@ -31,7 +31,7 @@ Returns:
     tokens or ids: List or List of List
 
 
-<h4 id="SpacyTokenizer.encode" class="doc_header"><code>SpacyTokenizer.encode</code><a href="nlp_preprocessing/seq_token_generator.py#L95" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="SpacyTokenizer.encode" class="doc_header"><code>SpacyTokenizer.encode</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_token_generator.py#L95" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>SpacyTokenizer.encode</code>(**`text`**, **`max_seq`**=*`128`*)
 
@@ -50,7 +50,7 @@ Returns:
 
 
 
-<h4 id="SpacyTokenizer.encode_plus" class="doc_header"><code>SpacyTokenizer.encode_plus</code><a href="nlp_preprocessing/seq_token_generator.py#L120" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="SpacyTokenizer.encode_plus" class="doc_header"><code>SpacyTokenizer.encode_plus</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_token_generator.py#L120" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>SpacyTokenizer.encode_plus</code>(**`input_texts`**, **`max_seq`**=*`128`*)
 
@@ -68,7 +68,7 @@ Returns:
 
 
 
-<h4 id="SpacyTokenizer.tokenize" class="doc_header"><code>SpacyTokenizer.tokenize</code><a href="nlp_preprocessing/seq_token_generator.py#L60" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="SpacyTokenizer.tokenize" class="doc_header"><code>SpacyTokenizer.tokenize</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_token_generator.py#L60" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>SpacyTokenizer.tokenize</code>(**`input_texts`**)
 
@@ -160,13 +160,13 @@ from nlp_preprocessing.seq_parser_token_generator import *
 
 
 
-<h2 id="SpacyParseTokenizer" class="doc_header"><code>class</code> <code>SpacyParseTokenizer</code><a href="nlp_preprocessing/seq_parser_token_generator.py#L142" class="source_link" style="float:right">[source]</a></h2>
+<h2 id="SpacyParseTokenizer" class="doc_header"><code>class</code> <code>SpacyParseTokenizer</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_parser_token_generator.py#L142" class="source_link" style="float:right">[source]</a></h2>
 
 > <code>SpacyParseTokenizer</code>(**`parsers`**=*`['pos', 'tag', 'dep']`*)
 
 
 
-<h4 id="SpacyParseTokenizer.__call__" class="doc_header"><code>SpacyParseTokenizer.__call__</code><a href="nlp_preprocessing/seq_parser_token_generator.py#L163" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="SpacyParseTokenizer.__call__" class="doc_header"><code>SpacyParseTokenizer.__call__</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_parser_token_generator.py#L163" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>SpacyParseTokenizer.__call__</code>(**`inputs`**, **`call_type`**=*`'tokenize'`*, **`max_seq`**=*`None`*)
 
@@ -184,7 +184,7 @@ Returns:
     results: dict (contains keys i.e. tag, pos, dep)
 
 
-<h4 id="SpacyParseTokenizer.tokenize" class="doc_header"><code>SpacyParseTokenizer.tokenize</code><a href="nlp_preprocessing/seq_parser_token_generator.py#L282" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="SpacyParseTokenizer.tokenize" class="doc_header"><code>SpacyParseTokenizer.tokenize</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_parser_token_generator.py#L282" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>SpacyParseTokenizer.tokenize</code>(**`input_texts`**)
 
@@ -199,7 +199,7 @@ Returns:
     results: dict
 
 
-<h4 id="SpacyParseTokenizer.encode" class="doc_header"><code>SpacyParseTokenizer.encode</code><a href="nlp_preprocessing/seq_parser_token_generator.py#L195" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="SpacyParseTokenizer.encode" class="doc_header"><code>SpacyParseTokenizer.encode</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_parser_token_generator.py#L195" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>SpacyParseTokenizer.encode</code>(**`text`**, **`max_seq`**=*`128`*)
 
@@ -216,7 +216,7 @@ Returns:
     results: dict
 
 
-<h4 id="SpacyParseTokenizer.encode_plus" class="doc_header"><code>SpacyParseTokenizer.encode_plus</code><a href="nlp_preprocessing/seq_parser_token_generator.py#L230" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="SpacyParseTokenizer.encode_plus" class="doc_header"><code>SpacyParseTokenizer.encode_plus</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/seq_parser_token_generator.py#L230" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>SpacyParseTokenizer.encode_plus</code>(**`input_texts`**, **`max_seq`**=*`128`*)
 

@@ -2,6 +2,7 @@ site_name: nlp-preprocessing
 nav:
     - Home: index.md
     - Cleaning: cleaning.md
+    - Dataset: dataset.md
     - Tokenization: tokenization.md
     - Vocab & Embedding Extractor: vocab_embedding_extractor.md
 theme: readthedocs

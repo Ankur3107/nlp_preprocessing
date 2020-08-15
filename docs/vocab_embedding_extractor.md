@@ -7,7 +7,7 @@ from nlp_preprocessing.vocab_embedding_extractor import VocabEmbeddingExtractor
 
 
 
-<h2 id="VocabEmbeddingExtractor" class="doc_header"><code>class</code> <code>VocabEmbeddingExtractor</code><a href="nlp_preprocessing/vocab_embedding_extractor.py#L24" class="source_link" style="float:right">[source]</a></h2>
+<h2 id="VocabEmbeddingExtractor" class="doc_header"><code>class</code> <code>VocabEmbeddingExtractor</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/vocab_embedding_extractor.py#L24" class="source_link" style="float:right">[source]</a></h2>
 
 > <code>VocabEmbeddingExtractor</code>(**`vector_file`**, **`input_file`**, **`column_name`**)
 
@@ -24,7 +24,7 @@ Args:
 
 
 
-<h4 id="VocabEmbeddingExtractor.process" class="doc_header"><code>VocabEmbeddingExtractor.process</code><a href="nlp_preprocessing/vocab_embedding_extractor.py#L42" class="source_link" style="float:right">[source]</a></h4>
+<h4 id="VocabEmbeddingExtractor.process" class="doc_header"><code>VocabEmbeddingExtractor.process</code><a href="https://github.com/Ankur3107/nlp_preprocessing/blob/master/nlp_preprocessing/vocab_embedding_extractor.py#L42" class="source_link" style="float:right">[source]</a></h4>
 
 > <code>VocabEmbeddingExtractor.process</code>(**`output_dir`**, **`special_tokens`**=*`[]`*)
 

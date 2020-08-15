@@ -4,6 +4,25 @@ from sklearn.preprocessing import OneHotEncoder
 import numpy as np
 
 class Dataset():
+    """`Dataset` allow split and encoding using external config file
+
+        Args:
+        
+            data_config (dict): config dict
+            example:
+                data_config = {
+                            'data_class':'multi-class',
+                            'x_columns':[],
+                            'y_columns':[],
+                            'one_hot_encoded_columns':[],
+                            'label_encoded_columns':[],
+                            'data':None,
+                            'split_ratio':0.2,
+                            'random_state':3107
+                        }
+                where data_class: ['multi-class','multi-label'] and data: it should be dataframe
+
+        """
 
     def __init__(self, data_config):
         self.data_config = self.__get_default_data_config()
