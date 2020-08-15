@@ -38,7 +38,6 @@ def convert_by_vocab(vocab, items):
   return output
 
 class SpacyTokenizer():
-
     def __init__(self, vocab_file=None, spacy_tokenizer=spacy_tokenizer, special_token=['[PAD]'], pad_token_index=0):
         self.tokenizer = spacy_tokenizer
         self.vocab = load_vocab(vocab_file) if vocab_file else self.__get_initial_vocab(special_token)
@@ -59,6 +58,14 @@ class SpacyTokenizer():
         
 
     def tokenize(self, input_texts):
+        """`tokenizer` method allow to tokenize text
+
+        Args:
+            input_texts (List): Takes list of text(string)
+
+        Returns:
+            tokens: List[List]
+        """
         docs = self.tokenizer.pipe(input_texts, n_threads = 4)
         
         output_tokens = []
@@ -84,6 +91,15 @@ class SpacyTokenizer():
             return tokens
 
     def encode(self, text, max_seq=128):
+        """`encode` method allow to encode text into ids with max_seq lenght
+
+        Args:
+            text (string): input text
+            max_seq (int, optional): Defaults to 128.
+
+        Returns:
+            tokens: List of token
+        """
         doc = self.tokenizer(text)
 
         tokens = [token.text for token in doc]
@@ -97,6 +113,15 @@ class SpacyTokenizer():
         return tokens
 
     def encode_plus(self, input_texts, max_seq=128):
+        """`encode_plus` method allow to encode list of text into list of ids with max_seq lenght
+
+        Args:
+            input_texts (List): List of text
+            max_seq (int, optional): Defaults to 128.
+
+        Returns:
+            tokens: List of List of token
+        """
 
         docs = self.tokenizer.pipe(input_texts, n_threads = 4)
         
@@ -115,6 +140,16 @@ class SpacyTokenizer():
         return output_tokens
 
     def __call__(self, inputs, call_type='encode', max_seq=None):
+        """`__call__` method allow to 
+
+        Args:
+            inputs ([type]): [description]
+            call_type (str, optional): [description]. Defaults to 'encode'.
+            max_seq ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """
 
         if call_type == 'encode':
             if type(inputs) == str:
