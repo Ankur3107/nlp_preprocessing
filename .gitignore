@@ -3,3 +3,4 @@
 *build
 *.ipynb*
 *.egg-info*
+nbs/*
