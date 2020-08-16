@@ -7,6 +7,7 @@ import re
 import unicodedata
 import six
 
+# code from: https://github.com/google-research/bert/blob/master/tokenization.py
 
 def validate_case_matches_checkpoint(do_lower_case, init_checkpoint):
   """Checks whether the casing config is consistent with the checkpoint name."""

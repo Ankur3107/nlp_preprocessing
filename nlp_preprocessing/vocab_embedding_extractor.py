@@ -21,24 +21,57 @@ def load_vectors(fname, type='index',vocab=None):
         
     return data
 
+
+class WordEmbedding():
+    def __init__(self, vector_file, embedding_size=300):
+        self.vector_file = vector_file
+        self.embedding_size = embedding_size
+
+    def get_embeddings(self, vocab):
+
+        vectors_dict = load_vectors(self.vector_file, 'embedding', vocab)
+        return self.__get_final_embeddings(vectors_dict, vocab)
+
+    def __get_final_embeddings(self, vectors_dict, vocab):
+        results = {}
+
+        for k, v in vocab.items():
+            if k in vectors_dict:
+                results[k] = vectors_dict[k]
+            else:
+                results[k] = list(np.random.uniform(-1,1,self.embedding_size))
+                
+        return np.array(list(results.values()))
+        
+        
 class VocabEmbeddingExtractor():
-    """`VocabEmbeddingExtractor` takes files(input file, vector file) and extract vocab and corrosponding embeddings from word2vec, fasttext, glove etc. word embeddings
+    """`VocabEmbeddingExtractor` takes files(input file, vector file) and extract vocab and corrosponding embeddings from fasttext word embeddings
 
         Args:
 
-            vector_file (string): external vector file i.e. word2vec, glove, fasttext
+            vector_file (string): external vector file i.e. currently only compatible for fasttext vestor file
 
             input_file (string): input file in csv
 
             column_name (string): text column name from input file
 
         """
-    def __init__(self,vector_file, input_file, column_name):
+    def __init__(self, vector_file, texts=None, input_file=None, column_name=None, embedding_size=300):
+        
+        if texts:
+            self.texts = texts
+        elif input_file and column_name:
+            self.input_file = input_file
+            self.column_name = column_name
+            df = pd.read_csv(self.input_file)
+            self.texts = df[self.column_name].values.tolist()
+
+        else:
+            print('Please enter either texts or input_file, column_name')
+
         self.vector_file = vector_file
-        self.input_file = input_file
-        self.column_name = column_name
-
-
+        self.embedding_size = embedding_size
+        
     def process(self, output_dir, special_tokens=[]):
         """`process` method allow to process and save output to output_dir
 
@@ -50,7 +83,6 @@ class VocabEmbeddingExtractor():
         """
 
         vectors_dict = load_vectors(self.vector_file)
-        df = pd.read_csv(self.input_file)
 
         full_vocab_file = output_dir+'/full_vocab.txt'
         full_vocab = list(vectors_dict.keys())
@@ -61,7 +93,7 @@ class VocabEmbeddingExtractor():
         full_vocab_tokenizer = FullTokenizer(
             vocab_file=full_vocab_file, do_lower_case=True)
         
-        unique_subword = self.__get_unique(full_vocab_tokenizer, df[self.column_name].values)
+        unique_subword = self.__get_unique(full_vocab_tokenizer, self.texts)
 
         vocab_file = output_dir+'/vocab.txt'
         self.__write(unique_subword, vocab_file)
@@ -85,7 +117,7 @@ class VocabEmbeddingExtractor():
     def __get_final_embedding(self, embedding_list, special_tokens):
         print('Making Final Embedding ...')
         for t in special_tokens:
-            embedding_list.append(list(np.random.uniform(-1,1,300)))
+            embedding_list.append(list(np.random.uniform(-1,1,self.embedding_size)))
 
         embedding_matrix = np.array(embedding_list)
         return embedding_matrix
